@@ -16,8 +16,9 @@ Simple seed for use in a MEAN application
 
 Not all of the technologies listed above have been implemented yet  
 Yet to be implemented:
-- AngularJS frontend 
+- AngularJS front-end 
 - OAuth 2.0 (OpenIdConnect)
+- MochaJS unit test
 
 ### Installation
 
@@ -66,6 +67,16 @@ Or to restart the application automatically use:
 $ nodemon 
 ```
 
+### Deployment
+From the get go the seed is setup to be deployed to [OpenShift] but can be changed to run on any cloud provider.  
+Before deploying you must add the line from `deploy.txt` to *"scripts"* in `package.json`, otherwise bower will not install the required components on openshift.
+```json
+"scripts": {
+    "start": "node ./bin/www",
+	"postinstall": "HOME=$OPENSHIFT_REPO_DIR bower install || bower install"
+  }
+```
+
 License
 ----
 MIT
@@ -79,3 +90,4 @@ MIT
 [HandleBars]: <http://handlebarsjs.com/>
 [OAuth 2.0]: <http://oauth.net/2/>
 [MochaJS]: <https://mochajs.org/>
+[OpenShift]: <https://www.openshift.com/>
