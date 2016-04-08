@@ -15,7 +15,7 @@ Simple seed for use in a MEAN application
 **0.0.1**  
 
 Not all of the technologies listed above have been implemented yet  
-To Do:
+Todo:
 - AngularJS front-end 
 - OAuth 2.0 (OpenIdConnect)
 - MochaJS unit test
