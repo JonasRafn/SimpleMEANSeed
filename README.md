@@ -1,5 +1,5 @@
 # SimpleMEANSeed
-***
+
 Simple seed for use in a MEAN application   
 - [Node.JS] - evented I/O for the backend
 - [Express] - fast node.js network app framework
