@@ -5,8 +5,11 @@ Simple seed for use in a MEAN application
 - [Express] - fast node.js network app framework
 - [MongoDB] - Fast document oriented NoSQL Database
 - [JWT] - Simple token authentication
+- [OAuth 2.0] - Third party authentication
 - [AngularJS] - HTML enhanced for web apps
 - [HandleBars] - Simple schematic for web pages
+- [MochaJS] - Unit testing JS
+
 
 ### Version
 **0.0.1**  
@@ -74,3 +77,5 @@ MIT
 [MongoDB]: <https://www.mongodb.org/>
 [JWT]: <https://jwt.io/>
 [HandleBars]: <http://handlebarsjs.com/>
+[OAuth 2.0]: <http://oauth.net/2/>
+[MochaJS]: <https://mochajs.org/>
