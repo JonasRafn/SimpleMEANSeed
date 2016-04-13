@@ -8,7 +8,7 @@ var User = require('../app/models/user');
 // User singup (POST localhost:3000/users/signup)
 router.post('/signup', function (req, res) {
     if (!req.body.userName || !req.body.password) {
-        res.json({success: false, msg: 'Please pass userName and password in the body.'});
+        res.status(200).json({success: false, msg: 'Please pass userName and password in the body.'});
     } else {
         var newUser = new User({
             userName: req.body.userName,
@@ -17,7 +17,7 @@ router.post('/signup', function (req, res) {
         // save the user
         newUser.save(function (err) {
             if (err) {
-                return res.json({success: false, msg: 'Username already exists.'});
+                return res.status(409).json({success: false, msg: 'Username already exists.'});
             }
             res.json({success: true, msg: 'Successfully created new user.'});
         });
@@ -47,7 +47,7 @@ router.post('/authenticate', function (req, res) {
                     };
                     var token = jwt.encode(payload, jwtConfig.secret);
                     // return the information including token as JSON
-                    res.json({success: true, token: 'JWT ' + token});
+                    res.status(200).json({success: true, token: 'JWT ' + token});
                 } else {
                     res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'});
                 }

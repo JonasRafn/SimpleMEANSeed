@@ -12,24 +12,60 @@ passportConfig(passport);
 var mongoose = require('mongoose');
 var config = require('./config/database');
 
+var helmet = require('helmet');
+var session = require('cookie-session');
+
+var seedConfig = require('./config/seedConfig');
+
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use('/static', express.static(__dirname + '/public'));
 app.use('/static', express.static(__dirname + '/bower_components'));
+app.use(express.static(path.join(__dirname, 'public/app')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(helmet());
 
 // use the passport package
 app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(function (req, res, next) {
+    if (req.headers['x-forwarded-proto'] === 'http') {
+        var tmp = 'https://' + req.headers.host + req.originalUrl;
+        res.redirect(tmp);
+
+    } else {
+        return next();
+    }
+});
+
+app.set('trust proxy', 1);
+app.use(session({
+        name: seedConfig.configs.cookieName,
+        secret: seedConfig.configs.cookieSecret
+    })
+);
+
+var expiryDate = new Date(Date.now() + seedConfig.configs.sessionExpiration);
+app.use(session({
+        name: seedConfig.configs.sessionName,
+        keys: [seedConfig.configs.sessionKey1, seedConfig.configs.sessionKey2],
+        cookie: {
+            secure: true, //Ensures the browser only sends the cookie over HTTPS.
+            httpOnly: true, //Ensures the cookie is sent only over HTTP(S), not client JavaScript, helping to protect against cross-site scripting attacks.
+            domain: seedConfig.configs.sessionDomain, //Indicates the domain of the cookie
+            path: seedConfig.configs.sessionPath, //Indicates the path of the cookie
+            expires: expiryDate //Used to set expiration date for persistent cookies.
+        }
+    })
+);
 
 // connect to database
 mongoose.connect(config.database);
@@ -50,7 +86,6 @@ app.use('/api', function (req, res, next) {
 });
 
 
-app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 app.use('/api', require('./routes/api'));
 

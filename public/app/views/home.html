@@ -1,0 +1,22 @@
+<div class="container-fluid">
+
+    <h1>{{message}}</h1>
+    <div class="alert alert-danger" ng-show="error">
+        <strong>{{info}}!</strong>
+    </div>
+
+    <div>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="name in names">{{name.name}}</li>
+        </ul>
+    </div>
+
+    <p>Click here to see working JWT authorization on a API</p>
+    <a class="btn btn-primary" href="#/hellos">Hello's!</a>
+
+    <br>
+    <br>
+    <button class="btn btn-warning" ng-click="logout()">Log out/kill token</button>
+
+
+</div>
