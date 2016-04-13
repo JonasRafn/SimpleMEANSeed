@@ -44,7 +44,7 @@ Setup options
 - JSON Web Token Audience
 - JSON Web Token Issuer
 - MongoDB secret
-- MongoDB name (for local database only)
+- MongoDB name (for development only)
 ```javascript
 module.exports.seedConfig = {
     jwtSecret: "YOUR_JWT_SECRET_HERE",
